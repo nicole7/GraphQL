@@ -12,5 +12,9 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jeremiahsiegel-inspire11/nicoles-repository#readme"
+  "homepage": "https://bitbucket.org/jeremiahsiegel-inspire11/nicoles-repository#readme",
+  "dependencies": {
+    "apollo": "^2.22.0",
+    "react": "^16.12.0"
+  }
 }
