@@ -493,6 +493,7 @@ export interface PageInfoSubscription
 }
 
 export interface User {
+  __typename: "User";
   id: ID_Output;
   name: String;
 }
@@ -607,6 +608,7 @@ export interface PostConnectionSubscription
 }
 
 export interface Post {
+  __typename: "Post";
   id: ID_Output;
   title: String;
   content?: String;
