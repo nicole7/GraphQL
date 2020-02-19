@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query GetAllUsers {
-    getAllUsers {
+  query users {
+    users {
       userId
       userName
       userPosts

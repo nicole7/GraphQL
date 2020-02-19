@@ -150,7 +150,7 @@ enum PostOrderByInput {
   title_DESC
   content_ASC
   content_DESC
-  published_ASC
+  published_ASCF
   published_DESC
   updatedAt_ASC
   updatedAt_DESC

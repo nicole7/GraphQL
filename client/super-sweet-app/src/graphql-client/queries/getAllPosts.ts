@@ -1,13 +1,16 @@
 import gql from "graphql-tag";
 
 export default gql`
-  query GetAllPosts {
-    getAllPosts {
-      postId
-      postTitle
-      postContent
-      isPublished
-      authorName
+  query posts {
+    posts {
+      id
+      title
+      content
+      published
+      author {
+        id
+        name
+      }
     }
   }
 `;

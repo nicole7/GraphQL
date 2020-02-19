@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "../../super-sweet-app/src/components/App/App";
 import * as serviceWorker from "./serviceWorker";
 import gql from "graphql-tag";
+import ApolloClient from "apollo-boost";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
@@ -14,14 +15,15 @@ serviceWorker.unregister();
 
 const client = new ApolloClient({});
 
-client
-  .query({
-    query: gql`
-      {
-        rates(currency: "USD") {
-          currency
-        }
-      }
-    `
-  })
-  .then(result => console.log(result));
+
+const allPosts = [
+  {
+    title: "First title",
+    content: "First content"
+  },
+  {
+    title: "Second title",
+    content: "Second content"
+  }
+];
+

@@ -97,3 +97,16 @@ const server = new GraphQLServer({
 server.start(() =>
   console.log(`GraphQL server is running on http://localhost:4000`)
 );
+
+// const resolvers = {
+//   Query: {
+//     posts: () => posts
+//   }
+// };
+
+// const server = new ApolloServer({ typeDefs, resolvers });
+
+// // The `listen` method launches a web server.
+// server.listen().then(({ url }) => {
+//   console.log(`🚀  Server ready at ${url}`);
+// });

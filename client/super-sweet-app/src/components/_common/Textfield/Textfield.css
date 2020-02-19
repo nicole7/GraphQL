@@ -1,0 +1,52 @@
+/* @import '../../../utils/styles/colors.scss'; */
+
+.form-control {
+  background-color: inherit;
+}
+
+.form-control:focus {
+  background-color: inherit;
+}
+
+.form-control:disabled {
+  background-color: inherit;
+}
+
+.Textfield-FormContainer {
+  display: flex;
+  align-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.Textfield-FormContainer form {
+  display: flex;
+  width: 100%;
+}
+
+.Textfield-InputTitle {
+  background-color: inherit;
+  color: $fadedGrey;
+  font-family: "Avenir-Book", sans-serif;
+  font-size: 0.7rem;
+}
+
+.Textfield-FormContainer .input-group-append {
+  flex: 1 1 auto;
+}
+
+.Textfield-FormContainer .form-control {
+  border-radius: 0;
+  margin-top: 3px;
+}
+
+.Textfield-FormContainer .form-control:focus,
+.Textfield-FormContainer .form-control:hover {
+  border: 2px solid black;
+  display: flex;
+}
+
+.Textfield-InputBox {
+  padding: 4px 0;
+}

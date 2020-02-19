@@ -9,7 +9,7 @@ interface UserProps {
   name: string;
 }
 
-const addUser = (): JSX.Element => {
+const AddUser = (): JSX.Element => {
   const [user, setUser] = useState();
   const [show, setShow] = useState(false);
   const [getUserById, { data: userData, loading: userLoading }] = useLazyQuery(
@@ -53,4 +53,4 @@ const addUser = (): JSX.Element => {
   );
 };
 
-export default addUser;
+export default AddUser;

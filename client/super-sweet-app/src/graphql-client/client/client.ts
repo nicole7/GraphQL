@@ -6,7 +6,9 @@ import { HttpLink } from "apollo-link-http";
 const cache = new InMemoryCache();
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL + "/api/graphqlEndpoint"
+  // uri: process.env.REACT_APP_GRAPHQL + "/api/graphqlEndpoint"
+  uri: process.env.REACT_APP_GRAPHQL
+  // uri: "http://127.0.0.1:4466/api/graphqlEndpoint"
 });
 
 const authLink = setContext((_, { headers }) => {
