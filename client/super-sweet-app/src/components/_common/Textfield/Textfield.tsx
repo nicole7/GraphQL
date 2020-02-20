@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { InputGroup, Form } from "react-bootstrap";
-import { InputLabelEnum } from "../../_common/InputTitleEnum/InputTitleEnum";
 import "./Textfield.css";
 
 interface CommonPropsType {
   disabled?: boolean;
   onBlur?: () => void;
   onChange?: (event: any) => void;
+
 }
 
 interface TextfieldProps {
   label: string;
-  helperText?: string;
-  select?: boolean;
   required?: boolean;
   type?: string;
   error?: boolean;
   id?: string;
-  mask?: string | (string | RegExp)[];
   name?: string;
   onChange?:
     | ((
@@ -31,18 +28,14 @@ interface TextfieldProps {
   onBlur?: (value: string | number | null | undefined) => void;
   disabled?: boolean;
   inputProps?: () => void;
-  endIcon?: JSX.Element;
 }
 
 export const Textfield = ({
   label,
   name,
   onChange,
-  error,
   value,
-  onBlur,
-  inputLabel,
-  disabled
+  onBlur
 }: TextfieldProps): JSX.Element => {
   const [inputValue, setInputValue] = useState(value);
 
@@ -69,7 +62,7 @@ export const Textfield = ({
             <InputGroup.Text>{label}</InputGroup.Text>
           </Form.Label>
           <div className="Textfield-InputBox">
-            <Form.Control type="text" name={name} />
+            <Form.Control type="text" name={name}/>
           </div>
         </InputGroup>
       </form>

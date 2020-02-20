@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Jan 30 2020 12:05:18 GMT-0600 (Central Standard Time)
+# timestamp: Thu Feb 20 2020 15:33:21 GMT-0600 (Central Standard Time)
 
 type AggregatePost {
   count: Int!
@@ -10,11 +10,12 @@ type AggregateUser {
 }
 
 type BatchPayload {
-  """
-  The number of nodes that have been affected by the Batch operation.
-  """
+  """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+"""Raw JSON value"""
+scalar Json
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -29,20 +30,13 @@ type Mutation {
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deletePost(where: PostWhereUniqueInput!): Post
-  upsertUser(
-    where: UserWhereUniqueInput!
-    create: UserCreateInput!
-    update: UserUpdateInput!
-  ): User!
-  upsertPost(
-    where: PostWhereUniqueInput!
-    create: PostCreateInput!
-    update: PostUpdateInput!
-  ): Post!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
 enum MutationType {
@@ -51,38 +45,24 @@ enum MutationType {
   DELETED
 }
 
-"""
-An object with an ID
-"""
+"""An object with an ID"""
 interface Node {
-  """
-  The id of the object.
-  """
+  """The id of the object."""
   id: ID!
 }
 
-"""
-Information about pagination in a connection.
-"""
+"""Information about pagination in a connection."""
 type PageInfo {
-  """
-  When paginating forwards, are there more items?
-  """
+  """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
 
-  """
-  When paginating backwards, are there more items?
-  """
+  """When paginating backwards, are there more items?"""
   hasPreviousPage: Boolean!
 
-  """
-  When paginating backwards, the cursor to continue.
-  """
+  """When paginating backwards, the cursor to continue."""
   startCursor: String
 
-  """
-  When paginating forwards, the cursor to continue.
-  """
+  """When paginating forwards, the cursor to continue."""
   endCursor: String
 }
 
@@ -91,26 +71,21 @@ type Post implements Node {
   title: String!
   content: String
   published: Boolean
-  author(where: UserWhereInput): User
+  author: User
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type PostConnection {
-  """
-  Information to aid in pagination.
-  """
+  """Information to aid in pagination."""
   pageInfo: PageInfo!
 
-  """
-  A list of edges.
-  """
+  """A list of edges."""
   edges: [PostEdge]!
   aggregate: AggregatePost!
 }
 
 input PostCreateInput {
+  id: ID
   title: String!
   content: String
   published: Boolean
@@ -123,23 +98,18 @@ input PostCreateManyWithoutAuthorInput {
 }
 
 input PostCreateWithoutAuthorInput {
+  id: ID
   title: String!
   content: String
   published: Boolean
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type PostEdge {
-  """
-  The item at the end of the edge.
-  """
+  """The item at the end of the edge."""
   node: Post!
 
-  """
-  A cursor for use in pagination.
-  """
+  """A cursor for use in pagination."""
   cursor: String!
 }
 
@@ -150,12 +120,8 @@ enum PostOrderByInput {
   title_DESC
   content_ASC
   content_DESC
-  published_ASCF
+  published_ASC
   published_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type PostPreviousValues {
@@ -163,6 +129,141 @@ type PostPreviousValues {
   title: String!
   content: String
   published: Boolean
+}
+
+input PostScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PostScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PostScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PostScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  content: String
+
+  """All values that are not equal to given value."""
+  content_not: String
+
+  """All values that are contained in given list."""
+  content_in: [String!]
+
+  """All values that are not contained in given list."""
+  content_not_in: [String!]
+
+  """All values less than the given value."""
+  content_lt: String
+
+  """All values less than or equal the given value."""
+  content_lte: String
+
+  """All values greater than the given value."""
+  content_gt: String
+
+  """All values greater than or equal the given value."""
+  content_gte: String
+
+  """All values containing the given string."""
+  content_contains: String
+
+  """All values not containing the given string."""
+  content_not_contains: String
+
+  """All values starting with the given string."""
+  content_starts_with: String
+
+  """All values not starting with the given string."""
+  content_not_starts_with: String
+
+  """All values ending with the given string."""
+  content_ends_with: String
+
+  """All values not ending with the given string."""
+  content_not_ends_with: String
+  published: Boolean
+
+  """All values that are not equal to given value."""
+  published_not: Boolean
 }
 
 type PostSubscriptionPayload {
@@ -173,24 +274,16 @@ type PostSubscriptionPayload {
 }
 
 input PostSubscriptionWhereInput {
-  """
-  Logical AND on all given filters.
-  """
+  """Logical AND on all given filters."""
   AND: [PostSubscriptionWhereInput!]
 
-  """
-  Logical OR on all given filters.
-  """
+  """Logical OR on all given filters."""
   OR: [PostSubscriptionWhereInput!]
 
-  """
-  Logical NOT on all given filters combined by AND.
-  """
+  """Logical NOT on all given filters combined by AND."""
   NOT: [PostSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -217,13 +310,33 @@ input PostUpdateInput {
   author: UserUpdateOneWithoutPostsInput
 }
 
+input PostUpdateManyDataInput {
+  title: String
+  content: String
+  published: Boolean
+}
+
+input PostUpdateManyMutationInput {
+  title: String
+  content: String
+  published: Boolean
+}
+
 input PostUpdateManyWithoutAuthorInput {
   create: [PostCreateWithoutAuthorInput!]
   connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
   disconnect: [PostWhereUniqueInput!]
   delete: [PostWhereUniqueInput!]
   update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+  deleteMany: [PostScalarWhereInput!]
   upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
 }
 
 input PostUpdateWithoutAuthorDataInput {
@@ -244,223 +357,137 @@ input PostUpsertWithWhereUniqueWithoutAuthorInput {
 }
 
 input PostWhereInput {
-  """
-  Logical AND on all given filters.
-  """
+  """Logical AND on all given filters."""
   AND: [PostWhereInput!]
 
-  """
-  Logical OR on all given filters.
-  """
+  """Logical OR on all given filters."""
   OR: [PostWhereInput!]
 
-  """
-  Logical NOT on all given filters combined by AND.
-  """
+  """Logical NOT on all given filters combined by AND."""
   NOT: [PostWhereInput!]
   id: ID
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   id_not: ID
 
-  """
-  All values that are contained in given list.
-  """
+  """All values that are contained in given list."""
   id_in: [ID!]
 
-  """
-  All values that are not contained in given list.
-  """
+  """All values that are not contained in given list."""
   id_not_in: [ID!]
 
-  """
-  All values less than the given value.
-  """
+  """All values less than the given value."""
   id_lt: ID
 
-  """
-  All values less than or equal the given value.
-  """
+  """All values less than or equal the given value."""
   id_lte: ID
 
-  """
-  All values greater than the given value.
-  """
+  """All values greater than the given value."""
   id_gt: ID
 
-  """
-  All values greater than or equal the given value.
-  """
+  """All values greater than or equal the given value."""
   id_gte: ID
 
-  """
-  All values containing the given string.
-  """
+  """All values containing the given string."""
   id_contains: ID
 
-  """
-  All values not containing the given string.
-  """
+  """All values not containing the given string."""
   id_not_contains: ID
 
-  """
-  All values starting with the given string.
-  """
+  """All values starting with the given string."""
   id_starts_with: ID
 
-  """
-  All values not starting with the given string.
-  """
+  """All values not starting with the given string."""
   id_not_starts_with: ID
 
-  """
-  All values ending with the given string.
-  """
+  """All values ending with the given string."""
   id_ends_with: ID
 
-  """
-  All values not ending with the given string.
-  """
+  """All values not ending with the given string."""
   id_not_ends_with: ID
   title: String
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   title_not: String
 
-  """
-  All values that are contained in given list.
-  """
+  """All values that are contained in given list."""
   title_in: [String!]
 
-  """
-  All values that are not contained in given list.
-  """
+  """All values that are not contained in given list."""
   title_not_in: [String!]
 
-  """
-  All values less than the given value.
-  """
+  """All values less than the given value."""
   title_lt: String
 
-  """
-  All values less than or equal the given value.
-  """
+  """All values less than or equal the given value."""
   title_lte: String
 
-  """
-  All values greater than the given value.
-  """
+  """All values greater than the given value."""
   title_gt: String
 
-  """
-  All values greater than or equal the given value.
-  """
+  """All values greater than or equal the given value."""
   title_gte: String
 
-  """
-  All values containing the given string.
-  """
+  """All values containing the given string."""
   title_contains: String
 
-  """
-  All values not containing the given string.
-  """
+  """All values not containing the given string."""
   title_not_contains: String
 
-  """
-  All values starting with the given string.
-  """
+  """All values starting with the given string."""
   title_starts_with: String
 
-  """
-  All values not starting with the given string.
-  """
+  """All values not starting with the given string."""
   title_not_starts_with: String
 
-  """
-  All values ending with the given string.
-  """
+  """All values ending with the given string."""
   title_ends_with: String
 
-  """
-  All values not ending with the given string.
-  """
+  """All values not ending with the given string."""
   title_not_ends_with: String
   content: String
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   content_not: String
 
-  """
-  All values that are contained in given list.
-  """
+  """All values that are contained in given list."""
   content_in: [String!]
 
-  """
-  All values that are not contained in given list.
-  """
+  """All values that are not contained in given list."""
   content_not_in: [String!]
 
-  """
-  All values less than the given value.
-  """
+  """All values less than the given value."""
   content_lt: String
 
-  """
-  All values less than or equal the given value.
-  """
+  """All values less than or equal the given value."""
   content_lte: String
 
-  """
-  All values greater than the given value.
-  """
+  """All values greater than the given value."""
   content_gt: String
 
-  """
-  All values greater than or equal the given value.
-  """
+  """All values greater than or equal the given value."""
   content_gte: String
 
-  """
-  All values containing the given string.
-  """
+  """All values containing the given string."""
   content_contains: String
 
-  """
-  All values not containing the given string.
-  """
+  """All values not containing the given string."""
   content_not_contains: String
 
-  """
-  All values starting with the given string.
-  """
+  """All values starting with the given string."""
   content_starts_with: String
 
-  """
-  All values not starting with the given string.
-  """
+  """All values not starting with the given string."""
   content_not_starts_with: String
 
-  """
-  All values ending with the given string.
-  """
+  """All values ending with the given string."""
   content_ends_with: String
 
-  """
-  All values not ending with the given string.
-  """
+  """All values not ending with the given string."""
   content_not_ends_with: String
   published: Boolean
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   published_not: Boolean
   author: UserWhereInput
 }
@@ -469,53 +496,21 @@ input PostWhereUniqueInput {
   id: ID
 }
 
+enum PrismaDatabase {
+  default
+}
+
 type Query {
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User]!
-  posts(
-    where: PostWhereInput
-    orderBy: PostOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Post]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   user(where: UserWhereUniqueInput!): User
   post(where: PostWhereUniqueInput!): Post
-  usersConnection(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): UserConnection!
-  postsConnection(
-    where: PostWhereInput
-    orderBy: PostOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): PostConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
 
-  """
-  Fetches an object given its ID
-  """
+  """Fetches an object given its ID"""
   node(
-    """
-    The ID of an object
-    """
+    """The ID of an object"""
     id: ID!
   ): Node
 }
@@ -528,34 +523,21 @@ type Subscription {
 type User implements Node {
   id: ID!
   name: String!
-  posts(
-    where: PostWhereInput
-    orderBy: PostOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [Post!]
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
-"""
-A connection to a list of items.
-"""
+"""A connection to a list of items."""
 type UserConnection {
-  """
-  Information to aid in pagination.
-  """
+  """Information to aid in pagination."""
   pageInfo: PageInfo!
 
-  """
-  A list of edges.
-  """
+  """A list of edges."""
   edges: [UserEdge]!
   aggregate: AggregateUser!
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   posts: PostCreateManyWithoutAuthorInput
 }
@@ -566,21 +548,16 @@ input UserCreateOneWithoutPostsInput {
 }
 
 input UserCreateWithoutPostsInput {
+  id: ID
   name: String!
 }
 
-"""
-An edge in a connection.
-"""
+"""An edge in a connection."""
 type UserEdge {
-  """
-  The item at the end of the edge.
-  """
+  """The item at the end of the edge."""
   node: User!
 
-  """
-  A cursor for use in pagination.
-  """
+  """A cursor for use in pagination."""
   cursor: String!
 }
 
@@ -589,10 +566,6 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type UserPreviousValues {
@@ -608,24 +581,16 @@ type UserSubscriptionPayload {
 }
 
 input UserSubscriptionWhereInput {
-  """
-  Logical AND on all given filters.
-  """
+  """Logical AND on all given filters."""
   AND: [UserSubscriptionWhereInput!]
 
-  """
-  Logical OR on all given filters.
-  """
+  """Logical OR on all given filters."""
   OR: [UserSubscriptionWhereInput!]
 
-  """
-  Logical NOT on all given filters combined by AND.
-  """
+  """Logical NOT on all given filters combined by AND."""
   NOT: [UserSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -650,6 +615,10 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
 }
 
+input UserUpdateManyMutationInput {
+  name: String
+}
+
 input UserUpdateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   connect: UserWhereUniqueInput
@@ -669,151 +638,93 @@ input UserUpsertWithoutPostsInput {
 }
 
 input UserWhereInput {
-  """
-  Logical AND on all given filters.
-  """
+  """Logical AND on all given filters."""
   AND: [UserWhereInput!]
 
-  """
-  Logical OR on all given filters.
-  """
+  """Logical OR on all given filters."""
   OR: [UserWhereInput!]
 
-  """
-  Logical NOT on all given filters combined by AND.
-  """
+  """Logical NOT on all given filters combined by AND."""
   NOT: [UserWhereInput!]
   id: ID
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   id_not: ID
 
-  """
-  All values that are contained in given list.
-  """
+  """All values that are contained in given list."""
   id_in: [ID!]
 
-  """
-  All values that are not contained in given list.
-  """
+  """All values that are not contained in given list."""
   id_not_in: [ID!]
 
-  """
-  All values less than the given value.
-  """
+  """All values less than the given value."""
   id_lt: ID
 
-  """
-  All values less than or equal the given value.
-  """
+  """All values less than or equal the given value."""
   id_lte: ID
 
-  """
-  All values greater than the given value.
-  """
+  """All values greater than the given value."""
   id_gt: ID
 
-  """
-  All values greater than or equal the given value.
-  """
+  """All values greater than or equal the given value."""
   id_gte: ID
 
-  """
-  All values containing the given string.
-  """
+  """All values containing the given string."""
   id_contains: ID
 
-  """
-  All values not containing the given string.
-  """
+  """All values not containing the given string."""
   id_not_contains: ID
 
-  """
-  All values starting with the given string.
-  """
+  """All values starting with the given string."""
   id_starts_with: ID
 
-  """
-  All values not starting with the given string.
-  """
+  """All values not starting with the given string."""
   id_not_starts_with: ID
 
-  """
-  All values ending with the given string.
-  """
+  """All values ending with the given string."""
   id_ends_with: ID
 
-  """
-  All values not ending with the given string.
-  """
+  """All values not ending with the given string."""
   id_not_ends_with: ID
   name: String
 
-  """
-  All values that are not equal to given value.
-  """
+  """All values that are not equal to given value."""
   name_not: String
 
-  """
-  All values that are contained in given list.
-  """
+  """All values that are contained in given list."""
   name_in: [String!]
 
-  """
-  All values that are not contained in given list.
-  """
+  """All values that are not contained in given list."""
   name_not_in: [String!]
 
-  """
-  All values less than the given value.
-  """
+  """All values less than the given value."""
   name_lt: String
 
-  """
-  All values less than or equal the given value.
-  """
+  """All values less than or equal the given value."""
   name_lte: String
 
-  """
-  All values greater than the given value.
-  """
+  """All values greater than the given value."""
   name_gt: String
 
-  """
-  All values greater than or equal the given value.
-  """
+  """All values greater than or equal the given value."""
   name_gte: String
 
-  """
-  All values containing the given string.
-  """
+  """All values containing the given string."""
   name_contains: String
 
-  """
-  All values not containing the given string.
-  """
+  """All values not containing the given string."""
   name_not_contains: String
 
-  """
-  All values starting with the given string.
-  """
+  """All values starting with the given string."""
   name_starts_with: String
 
-  """
-  All values not starting with the given string.
-  """
+  """All values not starting with the given string."""
   name_not_starts_with: String
 
-  """
-  All values ending with the given string.
-  """
+  """All values ending with the given string."""
   name_ends_with: String
 
-  """
-  All values not ending with the given string.
-  """
+  """All values not ending with the given string."""
   name_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput

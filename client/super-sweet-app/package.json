@@ -11,10 +11,13 @@
     "apollo-boost": "^0.4.7",
     "apollo-client": "^2.6.8",
     "env-cmd": "^9.0.3",
+    "node-sass": "^4.13.1",
+    "prisma-client-lib": "^1.34.10",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.1",
+    "scss": "^0.2.4",
     "typescript": "^3.7.5"
   },
   "scripts": {

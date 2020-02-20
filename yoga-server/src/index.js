@@ -9,7 +9,8 @@ const resolvers = {
           where: {
             OR: [
               { title_contains: args.searchString },
-              { content_contains: args.searchString }
+              { content_contains: args.searchString },
+              { author_contains: args.searchString }
             ]
           }
         },
