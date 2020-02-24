@@ -9,8 +9,8 @@ const resolvers = {
           where: {
             OR: [
               { title_contains: args.searchString },
-              { content_contains: args.searchString },
-              { author_contains: args.searchString }
+              { content_contains: args.searchString }
+              //{ author_contains: args.searchString }
             ]
           }
         },
@@ -29,21 +29,15 @@ const resolvers = {
     }
   },
   Mutation: {
-    createDraft: (_, args, context, info) => {
-      return context.prisma.mutation.createPost(
-        {
-          data: {
-            title: args.title,
-            content: args.content,
-            author: {
-              connect: {
-                id: args.authorId
-              }
-            }
-          }
-        },
-        info
-      );
+    createDraft: (parent, args) => {
+      const post = {
+        id: `post_${idCount++}`,
+        title: args.title,
+        content: args.content,
+        published: false,
+      }
+      posts.push(post)
+      return post
     },
     publish: (_, args, context, info) => {
       return context.prisma.mutation.updatePost(

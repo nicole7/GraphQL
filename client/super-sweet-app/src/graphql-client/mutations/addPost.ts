@@ -1,9 +1,18 @@
 import gql from "graphql-tag";
 
 export default gql`
-  mutation createDraft($authorId: ID!, $title: String!, $content: String!) {
-    createDraft(authorId: $authorId, title: $title, content: $content) {
-      Post
+  mutation createDraft($input: CreateDraftInput) {
+    createDraft(input: $input) {
+      Post {
+        id
+        title
+        content
+        published
+        author {
+          id
+          name
+        }
+      }
     }
   }
 `;

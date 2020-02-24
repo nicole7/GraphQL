@@ -213,7 +213,7 @@ export interface UserSubscriptionWhereInput {
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
-  content?: Maybe<String>;
+  content: String;
   published?: Maybe<Boolean>;
   author?: Maybe<UserCreateOneWithoutPostsInput>;
 }
@@ -314,7 +314,7 @@ export interface PostCreateManyWithoutAuthorInput {
 export interface PostCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
   title: String;
-  content?: Maybe<String>;
+  content: String;
   published?: Maybe<Boolean>;
 }
 
@@ -493,7 +493,6 @@ export interface PageInfoSubscription
 }
 
 export interface User {
-  __typename: "User";
   id: ID_Output;
   name: String;
 }
@@ -608,10 +607,9 @@ export interface PostConnectionSubscription
 }
 
 export interface Post {
-  __typename: "Post";
   id: ID_Output;
   title: String;
-  content?: String;
+  content: String;
   published?: Boolean;
 }
 
@@ -646,7 +644,7 @@ export interface PostNullablePromise
 export interface PostPreviousValues {
   id: ID_Output;
   title: String;
-  content?: String;
+  content: String;
   published?: Boolean;
 }
 

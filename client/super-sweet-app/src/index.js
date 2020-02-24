@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "../../super-sweet-app/src/components/App/App";
 import * as serviceWorker from "./serviceWorker";
-import gql from "graphql-tag";
-import ApolloClient from "apollo-boost";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
@@ -13,17 +11,15 @@ ReactDOM.render(<App />, document.getElementById("root"));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-const client = new ApolloClient({});
+// const client = new ApolloClient({});
 
-
-const allPosts = [
-  {
-    title: "First title",
-    content: "First content"
-  },
-  {
-    title: "Second title",
-    content: "Second content"
-  }
-];
-
+// const allPosts = [
+//   {
+//     title: "First title",
+//     content: "First content"
+//   },
+//   {
+//     title: "Second title",
+//     content: "Second content"
+//   }
+// ];

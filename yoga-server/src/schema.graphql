@@ -1,7 +1,9 @@
 # import Post from '/generated/prisma.graphql'
 # import User from '/generated/prisma.graphql'
 input CreateDraftInput {
-  authorId: ID!, title: String!, content: String!
+  authorId: ID!
+  title: String!
+  content: String!
 }
 
 type Query {

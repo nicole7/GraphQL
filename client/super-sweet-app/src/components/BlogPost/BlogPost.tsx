@@ -1,5 +1,4 @@
 import React from "react";
-import ListPost from "../ListPost/ListPost";
 import { User } from "../../../../../yoga-server/generated/prisma-client";
 
 interface BlogPost {
@@ -14,7 +13,7 @@ const BlogPost = ({ id, title, content, author }: BlogPost): JSX.Element => {
     <div>
       <li>{title}</li>
       <li>{content}</li>
-      <li>{author ? author.name : ""}</li>
+      {/* <li>{author ? author.name : ""}</li> */}
     </div>
   );
 };
