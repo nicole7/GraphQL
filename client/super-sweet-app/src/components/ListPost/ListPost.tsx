@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
-import { Post } from "../../../../../yoga-server/generated/prisma-client/index";
+import { posts_posts as Post } from "../../types/schemaTypes";
 import { GET_ALL_POSTS } from "../../graphql-client/queries";
 import BlogPost from "../BlogPost/BlogPost";
 
@@ -9,7 +9,7 @@ interface ListPostProps {
   title: string | undefined;
   content: string | undefined;
   published: boolean | undefined;
-  // author: string | undefined;
+  author: string | undefined;
 }
 
 export const ListPost = (): JSX.Element => {
@@ -18,7 +18,6 @@ export const ListPost = (): JSX.Element => {
   //console.log(JSON.stringify(data));
 
   if (data) {
-    console.log("Heya");
     // const showList =
     data.posts &&
       data.posts.map((element: Post) => {
@@ -28,8 +27,8 @@ export const ListPost = (): JSX.Element => {
               key={element.id}
               id={element.id}
               title={element.title}
-              content={element.content}
-              author={element.author.name}
+              content={element.content || ""}
+              author={element.author || undefined}
             />
           </div>
         );

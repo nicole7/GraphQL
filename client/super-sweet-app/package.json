@@ -24,7 +24,10 @@
     "start": "env-cmd -f .env.local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "typegen-local": "npm run download-local && npm run codegen-local",
+    "download-local": "apollo service:download ./prisma/datamodel.graphql --endpoint http://localhost:4000",
+    "codegen-local": "apollo client:codegen ./src/types/schemaTypes.ts --target typescript --endpoint http://localhost:4000 --localSchemaFile=./prisma/datamodel.graphql --outputFlat"
   },
   "eslintConfig": {
     "extends": "react-app"
