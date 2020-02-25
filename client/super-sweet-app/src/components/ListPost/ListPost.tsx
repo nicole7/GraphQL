@@ -6,33 +6,22 @@ import BlogPost from "../BlogPost/BlogPost";
 
 export const ListPost = (): JSX.Element => {
   const { data, loading, error } = useQuery(GET_ALL_POSTS);
-
-  console.log(JSON.stringify(data));
-  console.log("********");
-
   if (data) {
-    // const showList =
-    data.posts &&
+    const showList =
+      data.posts &&
       data.posts.map((element: Post) => {
-        console.log(element.title);
         return (
-          <div>
-            <BlogPost
-              key={element.id}
-              id={element.id}
-              title={element.title}
-              content={element.content || ""}
-              author={element.author || undefined}
-            />
-          </div>
+          <BlogPost
+            key={element.id}
+            id={element.id}
+            title={element.title}
+            content={element.content || ""}
+            author={element.author || undefined}
+          />
         );
       });
 
-    // return (
-    //   <div className="ListPost-Container">
-    //     <BlogPost>{showList}</BlogPost>
-    //   </div>
-    // );
+    return <div className="ListPost-Container">{showList}</div>;
   }
 
   if (loading) {

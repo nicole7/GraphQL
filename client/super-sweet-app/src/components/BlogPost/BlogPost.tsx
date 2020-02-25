@@ -13,7 +13,7 @@ const BlogPost = ({ id, title, content, author }: BlogPost): JSX.Element => {
     <div>
       <li>{title}</li>
       <li>{content}</li>
-      {/* <li>{author ? author.name : ""}</li> */}
+      <li>{author ? author.name : ""}</li>
     </div>
   );
 };
