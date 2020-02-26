@@ -1,0 +1,32 @@
+.CustomButton-Default {
+  color: grey;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  min-width: 80px;
+  max-height: 30px;
+}
+
+.CustomButton-Default:hover {
+  cursor: pointer;
+}
+
+.CustomButton-Bordered {
+  background-color: white;
+  border: 2px solid green;
+}
+
+.CustomButton-Plain {
+  border: 2px solid blue;
+}
+
+.CustomButton-Plain:disabled {
+  background-color: tan;
+  color: grey;
+}
+
+.CustomButton-Disabled {
+  pointer-events: none;
+}

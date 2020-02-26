@@ -5,6 +5,7 @@ import useAddPostForm from "./useAddPostForm";
 import { Post } from "../../../../../yoga-server/generated/prisma-client/index";
 import { CustomButton } from "../_common/CustomButton/CustomButton";
 import Textfield from "../_common/Textfield/Textfield";
+import "./AddPost.scss";
 
 interface PostProps {
   id: number | string;
@@ -46,35 +47,30 @@ export const AddPost = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <Textfield 
+    <div className="AddPost-Container">
+      <div className="AddPost-Header">Add a New Post</div>
+      <div className="AddPost-InputBody">
+        <Textfield
           label="Title"
           name="title"
           onChange={(event: any) => {
             handleInputChange(event);
-        }}
-      />
-      <Textfield 
+          }}
+        />
+        <Textfield
           label="Content"
           name="content"
           onChange={(event: any) => {
             handleInputChange(event);
-        }}
-      />
-      <form>
-        <label>
-          Title:
-          <input type="text" name="name" />
-          Content:
-          <input type="textArea" name="name" />
-        </label>
-      </form>
-      <CustomButton
-        title="Save"
-        onClick={() => {
-          addNewPost();
-        }}
-      ></CustomButton>
+          }}
+        />
+        <CustomButton
+          title="Save"
+          onClick={() => {
+            addNewPost();
+          }}
+        ></CustomButton>
+      </div>
     </div>
   );
 };

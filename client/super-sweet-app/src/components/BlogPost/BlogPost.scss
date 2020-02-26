@@ -1,0 +1,22 @@
+.BlogPost-Container {
+  display: flex;
+  margin-top: 2px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.BlogPost-Header {
+  font-weight: bold;
+  margin: 15px;
+}
+
+.BlogPost-Title {
+  margin: 2px;
+}
+
+.BlogPost-Body {
+  margin-top: 10px;
+  margin-left: 20px;
+}

@@ -21,7 +21,12 @@ export const ListPost = (): JSX.Element => {
         );
       });
 
-    return <div className="ListPost-Container">{showList}</div>;
+    return (
+      <div>
+        <div className="BlogPost-Header">Posts:</div>
+        <div className="ListPost-Container">{showList}</div>
+    </div>
+    );
   }
 
   if (loading) {

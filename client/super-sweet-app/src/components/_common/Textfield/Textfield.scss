@@ -15,10 +15,13 @@
 .Textfield-FormContainer {
   display: flex;
   align-content: space-between;
-  margin-top: 15px;
-  margin-bottom: 8px;
+  margin: 15px;
   width: 100%;
 }
+
+// .Textfield-FormContainer input-group {
+//   margin: 15px;
+// }
 
 .Textfield-FormContainer form {
   display: flex;
@@ -27,7 +30,7 @@
 
 .Textfield-InputTitle {
   background-color: inherit;
-  color: $fadedGrey;
+  color: grey;
   font-family: "Avenir-Book", sans-serif;
   font-size: 0.7rem;
 }

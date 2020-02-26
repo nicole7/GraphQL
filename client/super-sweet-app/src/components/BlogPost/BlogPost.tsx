@@ -1,5 +1,6 @@
 import React from "react";
 import { User } from "../../../../../yoga-server/generated/prisma-client";
+import "./BlogPost.scss";
 
 interface BlogPost {
   id: number | string;
@@ -10,10 +11,14 @@ interface BlogPost {
 
 const BlogPost = ({ id, title, content, author }: BlogPost): JSX.Element => {
   return (
-    <div>
-      <li>{title}</li>
-      <li>{content}</li>
-      <li>{author ? author.name : ""}</li>
+    <div className="BlogPost-Container">
+      <div className="BlogPost-Title">{title}</div>
+      <div className="BlogPost-Body">
+        <div className="BlogPost-Content">{content}</div>
+        <div className="BlogPost-Author">
+          Written by: {author ? author.name : ""}
+        </div>
+      </div>
     </div>
   );
 };

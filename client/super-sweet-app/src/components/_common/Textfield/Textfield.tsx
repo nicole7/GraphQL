@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { InputGroup, Form } from "react-bootstrap";
-import "./Textfield.css";
+import "./Textfield.scss";
 
 interface CommonPropsType {
   disabled?: boolean;
