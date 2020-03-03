@@ -15,3 +15,10 @@
   max-width: fit-content;
   margin: 10px;
 }
+
+.AddPost-Button {
+  flex-direction: column;
+  display: flex;
+  margin: 15px;
+  justify-content: flex-end;
+}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_ALL_POSTS } from "../../graphql-client/queries";
 import useAddPostForm from "./useAddPostForm";
 import { Post } from "../../../../../yoga-server/generated/prisma-client/index";
 import { CustomButton } from "../_common/CustomButton/CustomButton";
 import Textfield from "../_common/Textfield/Textfield";
 import "./AddPost.scss";
+import { ADD_POST } from "../../graphql-client/mutations";
 
 interface PostProps {
   id: number | string;
@@ -17,61 +18,81 @@ interface PostProps {
 export const AddPost = (): JSX.Element => {
   const [post, setPost] = useState();
   const [show, setShow] = useState(false);
-  const [getPostById, { data: postData, loading: postLoading }] = useLazyQuery(
-    GET_ALL_POSTS
-  );
+  // const [getPostById, { data: postData, loading: postLoading }] = useLazyQuery(
+  //   GET_ALL_POSTS
+  // );
   const { handleSubmit, handleInputChange } = useAddPostForm();
-  const { data: postsData } = useQuery(GET_ALL_POSTS);
+  const [addPost, { data }] = useMutation(ADD_POST);
+  let input: HTMLInputElement | null;
 
-  useEffect(() => {
-    if (postData && postData.getAllPosts) {
-      if (postData && postData.getAllPosts) {
-        let userPosts: PostProps[] = [];
-        postData.getAllPosts.forEach((element: Post) => {
-          if (element.id !== null) {
-            userPosts.push({
-              id: element.id,
-              title: element.title,
-              content: element.content,
-              published: element.published
-            });
-          }
-        });
-        setPost(userPosts);
-      }
-    }
-  }, [postData, postLoading]);
+  // useEffect(() => {
+  //   if (postData && postData.getAllPosts) {
+  //     if (postData && postData.getAllPosts) {
+  //       let userPosts: PostProps[] = [];
+  //       postData.getAllPosts.forEach((element: Post) => {
+  //         if (element.id !== null) {
+  //           userPosts.push({
+  //             id: element.id,
+  //             title: element.title,
+  //             content: element.content,
+  //             published: element.published
+  //           });
+  //         }
+  //       });
+  //       setPost(userPosts);
+  //     }
+  //   }
+  // }, [postData, postLoading]);
 
   const addNewPost = (): void => {
     handleSubmit();
   };
 
   return (
-    <div className="AddPost-Container">
-      <div className="AddPost-Header">Add a New Post</div>
-      <div className="AddPost-InputBody">
-        <Textfield
-          label="Title"
-          name="title"
-          onChange={(event: any) => {
-            handleInputChange(event);
-          }}
-        />
-        <Textfield
-          label="Content"
-          name="content"
-          onChange={(event: any) => {
-            handleInputChange(event);
-          }}
-        />
-        <CustomButton
-          title="Save"
-          onClick={() => {
-            addNewPost();
-          }}
-        ></CustomButton>
-      </div>
-    </div>
+    <div>
+      {/* <form
+      onSubmit={e => {
+        e.preventDefault();
+        addPost({ variables: { type: input.value } });
+        input.value = '';
+      }}
+    >
+      <input
+        ref={node => {
+          input = node;
+        }}
+      />
+      <button type="submit">Add Post</button>
+    </form>
+  </div> */}
+      <div className="AddPost-Container">
+        <div className="AddPost-Header">Add a New Post</div>
+        <div className="AddPost-InputBody">
+          <Textfield
+            label="Title"
+            name="title"
+            onChange={(event: any) => {
+              handleInputChange(event);
+            }}
+          />
+          <Textfield
+            label="Content"
+            name="content"
+            onChange={(event: any) => {
+              handleInputChange(event);
+            }}
+          />
+          <div className="AddPost-Button">
+            <CustomButton
+              title="Save"
+              onClick={() => {
+                addNewPost();
+              }}
+            ></CustomButton>
+          </div>
+        </div>
+        </div>
+        </div>
   );
 };
 

@@ -17,6 +17,7 @@ const useAddPostForm = (): any => {
     content: ""
   });
 
+  //const [data] = useMutation(ADD_POST);
   const [addPost] = useMutation(ADD_POST, {
     onError: (e: ApolloError) => console.log("Error", e)
   });
@@ -41,6 +42,14 @@ const useAddPostForm = (): any => {
     if (event) {
       event.preventDefault();
     }
+
+    const addPostInput = {
+      title: inputs.title,
+      content: inputs.content,
+
+      addPost({ variables: { input: addPostInput } });
+    }
+
   };
 
   return {
