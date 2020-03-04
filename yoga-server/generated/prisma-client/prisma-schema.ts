@@ -50,8 +50,8 @@ type PageInfo {
 
 type Post {
   id: ID!
-  title: String!
-  content: String!
+  title: String
+  content: String
   published: Boolean
   author: User
 }
@@ -63,9 +63,8 @@ type PostConnection {
 }
 
 input PostCreateInput {
-  id: ID
-  title: String!
-  content: String!
+  title: String
+  content: String
   published: Boolean
   author: UserCreateOneWithoutPostsInput
 }
@@ -76,9 +75,8 @@ input PostCreateManyWithoutAuthorInput {
 }
 
 input PostCreateWithoutAuthorInput {
-  id: ID
-  title: String!
-  content: String!
+  title: String
+  content: String
   published: Boolean
 }
 
@@ -100,8 +98,8 @@ enum PostOrderByInput {
 
 type PostPreviousValues {
   id: ID!
-  title: String!
-  content: String!
+  title: String
+  content: String
   published: Boolean
 }
 
@@ -309,7 +307,6 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
   name: String!
   posts: PostCreateManyWithoutAuthorInput
 }
@@ -320,7 +317,6 @@ input UserCreateOneWithoutPostsInput {
 }
 
 input UserCreateWithoutPostsInput {
-  id: ID
   name: String!
 }
 

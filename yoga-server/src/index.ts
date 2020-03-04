@@ -1,3 +1,5 @@
+import { PostCreateInput } from "../generated/prisma-client";
+
 const { GraphQLServer } = require("graphql-yoga");
 const { Prisma } = require("prisma-binding");
 
@@ -29,15 +31,18 @@ const resolvers = {
     }
   },
   Mutation: {
-    createDraft: (parent, args) => {
-      const post = {
-        id: `post_${idCount++}`,
+    createDraft: (_, args, context, info) => {
+      const post: PostCreateInput = {
         title: args.title,
         content: args.content,
         published: false,
-      }
-      posts.push(post)
-      return post
+        author: {
+          connect: {
+            id: args.authorId
+          }
+        },
+      };
+      return context.prisma.mutation.createPost({data: post}, info);
     },
     publish: (_, args, context, info) => {
       return context.prisma.mutation.updatePost(

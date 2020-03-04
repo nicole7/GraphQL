@@ -7,6 +7,7 @@ import { CustomButton } from "../_common/CustomButton/CustomButton";
 import Textfield from "../_common/Textfield/Textfield";
 import "./AddPost.scss";
 import { ADD_POST } from "../../graphql-client/mutations";
+import '../../prisma';
 
 interface PostProps {
   id: number | string;
@@ -21,9 +22,9 @@ export const AddPost = (): JSX.Element => {
   // const [getPostById, { data: postData, loading: postLoading }] = useLazyQuery(
   //   GET_ALL_POSTS
   // );
-  const { handleSubmit, handleInputChange } = useAddPostForm();
-  const [addPost, { data }] = useMutation(ADD_POST);
-  let input: HTMLInputElement | null;
+  //const { handleSubmit, handleInputChange } = useAddPostForm();
+  const [addPost] = useMutation(ADD_POST);
+  let input: CreateDraftInput;
 
   // useEffect(() => {
   //   if (postData && postData.getAllPosts) {
@@ -44,28 +45,29 @@ export const AddPost = (): JSX.Element => {
   //   }
   // }, [postData, postLoading]);
 
-  const addNewPost = (): void => {
-    handleSubmit();
-  };
+  // const addNewPost = (): void => {
+  //   handleSubmit();
+  // };
 
   return (
     <div>
-      {/* <form
-      onSubmit={e => {
-        e.preventDefault();
-        addPost({ variables: { type: input.value } });
-        input.value = '';
-      }}
-    >
-      <input
-        ref={node => {
-          input = node;
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          addPost({ variables: { type: input } });
+          input = "";
         }}
-      />
-      <button type="submit">Add Post</button>
-    </form>
-  </div> */}
-      <div className="AddPost-Container">
+      >
+        <input
+          ref={node => {
+            input = node;
+          }}
+        />
+        <button type="submit">Add Post</button>
+      </form>
+
+      {/* </div> */}
+      {/* <div className="AddPost-Container">
         <div className="AddPost-Header">Add a New Post</div>
         <div className="AddPost-InputBody">
           <Textfield
@@ -91,8 +93,8 @@ export const AddPost = (): JSX.Element => {
             ></CustomButton>
           </div>
         </div>
-        </div>
-        </div>
+        </div> */}
+    </div>
   );
 };
 

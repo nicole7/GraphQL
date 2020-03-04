@@ -188,7 +188,6 @@ export interface PostUpdateManyWithoutAuthorInput {
 }
 
 export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
   name: String;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
 }
@@ -211,9 +210,8 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface PostCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  content: String;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
   published?: Maybe<Boolean>;
   author?: Maybe<UserCreateOneWithoutPostsInput>;
 }
@@ -233,7 +231,6 @@ export interface PostUpdateManyWithWhereNestedInput {
 }
 
 export interface UserCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
   name: String;
 }
 
@@ -312,9 +309,8 @@ export interface PostCreateManyWithoutAuthorInput {
 }
 
 export interface PostCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  content: String;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
   published?: Maybe<Boolean>;
 }
 
@@ -608,8 +604,8 @@ export interface PostConnectionSubscription
 
 export interface Post {
   id: ID_Output;
-  title: String;
-  content: String;
+  title?: String;
+  content?: String;
   published?: Boolean;
 }
 
@@ -643,8 +639,8 @@ export interface PostNullablePromise
 
 export interface PostPreviousValues {
   id: ID_Output;
-  title: String;
-  content: String;
+  title?: String;
+  content?: String;
   published?: Boolean;
 }
 
