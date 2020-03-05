@@ -1,53 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_ALL_POSTS } from "../../graphql-client/queries";
-import useAddPostForm from "./useAddPostForm";
 import { Post } from "../../../../../yoga-server/generated/prisma-client/index";
 import { CustomButton } from "../_common/CustomButton/CustomButton";
 import Textfield from "../_common/Textfield/Textfield";
 import "./AddPost.scss";
-import { ADD_POST } from "../../graphql-client/mutations";
-import '../../prisma';
+import { ADD_POST, ADD_USER } from "../../graphql-client/mutations";
+import { CreateDraftInput } from "../../types/schemaTypes";
 
 interface PostProps {
   id: number | string;
   title: string | undefined;
   content: string | undefined;
   published: boolean | undefined;
+  authorId: string;
 }
 
 export const AddPost = (): JSX.Element => {
   const [post, setPost] = useState();
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
+  const [authorId, setAuthorId] = useState();
   const [show, setShow] = useState(false);
-  // const [getPostById, { data: postData, loading: postLoading }] = useLazyQuery(
-  //   GET_ALL_POSTS
-  // );
-  //const { handleSubmit, handleInputChange } = useAddPostForm();
   const [addPost] = useMutation(ADD_POST);
   let input: CreateDraftInput;
-
-  // useEffect(() => {
-  //   if (postData && postData.getAllPosts) {
-  //     if (postData && postData.getAllPosts) {
-  //       let userPosts: PostProps[] = [];
-  //       postData.getAllPosts.forEach((element: Post) => {
-  //         if (element.id !== null) {
-  //           userPosts.push({
-  //             id: element.id,
-  //             title: element.title,
-  //             content: element.content,
-  //             published: element.published
-  //           });
-  //         }
-  //       });
-  //       setPost(userPosts);
-  //     }
-  //   }
-  // }, [postData, postLoading]);
-
-  // const addNewPost = (): void => {
-  //   handleSubmit();
-  // };
 
   return (
     <div>
@@ -55,14 +31,30 @@ export const AddPost = (): JSX.Element => {
         onSubmit={e => {
           e.preventDefault();
           addPost({ variables: { type: input } });
-          input = "";
+          input = {
+            authorId: authorId,
+            title: title,
+            content: content
+          };
         }}
       >
-        <input
+        <label>
+          Author:
+          <input type="text" value={title} />
+        </label>
+        <label>
+          Title:
+          <input type="text" value={title} />
+        </label>
+        <label>
+          Content:
+          <input type="text" value={title} />
+        </label>
+        {/* <input
           ref={node => {
             input = node;
           }}
-        />
+        /> */}
         <button type="submit">Add Post</button>
       </form>
 

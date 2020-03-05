@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import { GET_ALL_USERS } from "../../graphql-client/queries";
-import useAddPostForm from "../AddPost/useAddPostForm";
 import { User } from "../../../../../yoga-server/generated/prisma-client/index";
 
 interface UserProps {
@@ -15,12 +14,12 @@ const AddUser = (): JSX.Element => {
   const [getUserById, { data: userData, loading: userLoading }] = useLazyQuery(
     GET_ALL_USERS
   );
-  const {
-    inputs,
-    handleInputChange,
-    handleSubmit,
-    resetFormState
-  } = useAddPostForm();
+  // const {
+  //   inputs,
+  //   handleInputChange,
+  //   handleSubmit,
+  //   resetFormState
+  // } = useAddPostForm();
   const { data: usersData } = useQuery(GET_ALL_USERS);
 
   useEffect(() => {

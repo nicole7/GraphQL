@@ -1,3 +1,3 @@
 import ADD_POST from "./addPost";
-
-export { ADD_POST };
+import ADD_USER from "./addUser";
+export { ADD_POST, ADD_USER };

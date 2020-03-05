@@ -3,6 +3,37 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: createDraft
+// ====================================================
+
+export interface createDraft_createDraft_author {
+  __typename: "User";
+  id: string;
+  name: string;
+}
+
+export interface createDraft_createDraft {
+  __typename: "Post";
+  id: string;
+  title: string;
+  content: string | null;
+  published: boolean | null;
+  author: createDraft_createDraft_author | null;
+}
+
+export interface createDraft {
+  createDraft: createDraft_createDraft | null;
+}
+
+export interface createDraftVariables {
+  input?: CreateDraftInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: posts
 // ====================================================
 
@@ -50,6 +81,12 @@ export interface users {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export interface CreateDraftInput {
+  authorId: string;
+  title: string;
+  content: string;
+}
 
 //==============================================================
 // END Enums and Input Objects

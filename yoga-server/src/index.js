@@ -1,5 +1,3 @@
-import { PostCreateInput } from "../generated/prisma-client";
-
 const { GraphQLServer } = require("graphql-yoga");
 const { Prisma } = require("prisma-binding");
 
@@ -32,7 +30,7 @@ const resolvers = {
   },
   Mutation: {
     createDraft: (_, args, context, info) => {
-      const post: PostCreateInput = {
+      const post = {
         title: args.title,
         content: args.content,
         published: false,
@@ -40,9 +38,9 @@ const resolvers = {
           connect: {
             id: args.authorId
           }
-        },
+        }
       };
-      return context.prisma.mutation.createPost({data: post}, info);
+      return context.prisma.mutation.createPost(post);
     },
     publish: (_, args, context, info) => {
       return context.prisma.mutation.updatePost(
@@ -98,13 +96,6 @@ server.start(() =>
   console.log(`GraphQL server is running on http://localhost:4000`)
 );
 
-// const resolvers = {
-//   Query: {
-//     posts: () => posts
-//   }
-// };
-
-// const server = new ApolloServer({ typeDefs, resolvers });
 
 // // The `listen` method launches a web server.
 // server.listen().then(({ url }) => {
