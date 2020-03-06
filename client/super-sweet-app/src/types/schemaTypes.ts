@@ -34,6 +34,24 @@ export interface createDraftVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: signup
+// ====================================================
+
+export interface signup_signup {
+  __typename: "User";
+  id: string;
+  name: string;
+}
+
+export interface signup {
+  signup: signup_signup;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: posts
 // ====================================================
 
