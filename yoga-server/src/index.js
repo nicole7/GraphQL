@@ -26,14 +26,15 @@ const resolvers = {
   },
   Mutation: {
     createDraft: (_, args, context, info) => {
+      const { title, content, authorId } = args.input;
       return context.prisma.mutation.createPost({
         data: {
-          title: args.title,
-          content: args.content,
+          title: title,
+          content: content,
           published: false,
           author: {
             connect: {
-              id: args.authorId,
+              id: authorId,
             },
           },
         },
