@@ -1,61 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ALL_POSTS } from '../../graphql-client/queries';
-import { Post } from '../../../../../yoga-server/generated/prisma-client/index';
-import { CustomButton } from '../_common/CustomButton/CustomButton';
-import Textfield from '../_common/Textfield/Textfield';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+//import { GET_ALL_POSTS } from '../../graphql-client/queries';
+//import { Post } from '../../../../../yoga-server/generated/prisma-client/index';
+//import { CustomButton } from '../_common/CustomButton/CustomButton';
+//import Textfield from '../_common/Textfield/Textfield';
 import './AddPost.scss';
-import { ADD_POST, SIGNUP } from '../../graphql-client/mutations';
+import { ADD_POST } from '../../graphql-client/mutations';
 import { CreateDraftInput } from '../../types/schemaTypes';
-
-interface PostProps {
-  id: number | string;
-  title: string | undefined;
-  content: string | undefined;
-  published: boolean | undefined;
-  authorId: string;
-}
+import { Routes } from '../../../src/utils/routes';
 
 export const AddPost = (): JSX.Element => {
-  const [post, setPost] = useState();
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [authorId, setAuthorId] = useState();
-  const [show, setShow] = useState(false);
-  const [addPost] = useMutation(ADD_POST);
-  let input: CreateDraftInput;
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  //const [authorId, setAuthorId] = useState('');
+  const [postMutation] = useMutation(ADD_POST, {
+    onCompleted: () => console.log('post completed!'),
+  });
+
+  const addMutation = (): void => {
+    const URL = `${window.location.origin}${Routes.POST.route}`;
+    window.open(URL, '_self');
+  };
 
   return (
     <div>
-      <form
-        onSubmit={(e): void => {
-          e.preventDefault();
-          input = {
-            authorId: 'ck7gmfn74002v0999dio5wm9l',
-            title: `Nicole's title`,
-            content: 'still content',
-          };
-          addPost({ variables: { type: input } });
-        }}
-      >
-        <label>
-          Author:
-          <input type="text" value={authorId} />
-        </label>
+      <form>
         <label>
           Title:
-          <input type="text" value={title} />
+          <input type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} />
         </label>
+
         <label>
           Content:
-          <input type="text" value={content} />
+          <input type="text" name="content" value={content} onChange={e => setContent(e.target.value)} />
         </label>
-        {/* <input
-          ref={node => {
-            input = node;
+        <button
+          type="submit"
+          onClick={(e): void => {
+            e.preventDefault();
+            if (title !== '' && content !== '') {
+              const input: CreateDraftInput = {
+                title: title,
+                content: content,
+              };
+              postMutation({ variables: { input: input } });
+              addMutation();
+            } else {
+              console.log('Post not run');
+            }
           }}
-        /> */}
-        <button type="submit">Add Post</button>
+        >
+          Add Post
+        </button>
       </form>
 
       {/* </div> */}

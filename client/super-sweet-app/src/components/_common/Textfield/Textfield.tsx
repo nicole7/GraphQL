@@ -45,9 +45,9 @@ export const Textfield = ({
         onBlur(inputValue);
       }
     },
-    onChange: (event: any): void => {
-      setInputValue(value);
-    }
+    // onChange: (event: any): void => {
+    //   setInputValue(value);
+    // }
   };
 
   useEffect(() => {

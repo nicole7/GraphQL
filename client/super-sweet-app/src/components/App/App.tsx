@@ -1,10 +1,8 @@
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 import "./App.scss";
-import AddPost from "../AddPost/AddPost";
-import ShowPost from "./ShowPost/ShowPost";
-
-//import AddUser from "../AddUser/AddUser";
+import {BrowserRouter as Router} from 'react-router-dom';
+import Content from "../Content/Content";
 import client from "../../graphql-client/client/client";
 
 const App = (): JSX.Element => {
@@ -12,8 +10,9 @@ const App = (): JSX.Element => {
 
   return (
     <ApolloProvider client={client}>
-      <AddPost />
-      <ShowPost />
+      <Router>
+        <Content />
+      </Router>
     </ApolloProvider>
   );
 };

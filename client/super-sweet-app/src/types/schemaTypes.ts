@@ -34,17 +34,55 @@ export interface createDraftVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: editPost
+// ====================================================
+
+export interface editPost_createDraft_author_posts {
+  __typename: "Post";
+  id: string;
+  title: string;
+  content: string | null;
+}
+
+export interface editPost_createDraft_author {
+  __typename: "User";
+  id: string;
+  name: string;
+  posts: editPost_createDraft_author_posts[] | null;
+}
+
+export interface editPost_createDraft {
+  __typename: "Post";
+  author: editPost_createDraft_author | null;
+}
+
+export interface editPost {
+  createDraft: editPost_createDraft | null;
+}
+
+export interface editPostVariables {
+  input?: UpdatePostInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: signup
 // ====================================================
 
 export interface signup_signup {
   __typename: "User";
-  id: string;
   name: string;
 }
 
 export interface signup {
-  signup: signup_signup;
+  signup: signup_signup | null;
+}
+
+export interface signupVariables {
+  input: string;
 }
 
 /* tslint:disable */
@@ -101,7 +139,12 @@ export interface users {
 //==============================================================
 
 export interface CreateDraftInput {
-  authorId: string;
+  authorId?: string | null;
+  title: string;
+  content: string;
+}
+
+export interface UpdatePostInput {
   title: string;
   content: string;
 }

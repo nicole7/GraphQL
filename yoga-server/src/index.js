@@ -7,7 +7,11 @@ const resolvers = {
       return context.prisma.query.posts(
         {
           where: {
-            OR: [{ title_contains: args.searchString }, { content_contains: args.searchString }],
+            OR: [
+              { title_contains: args.searchString },
+              { content_contains: args.searchString },
+              //{ author_contains: args.searchString }
+            ],
           },
         },
         info,
@@ -23,10 +27,20 @@ const resolvers = {
         info,
       );
     },
+  post: (_, args, context, info) => {
+    return context.prisma.query.post(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      info,
+      );
+    },
   },
   Mutation: {
     createDraft: (_, args, context, info) => {
-      const { title, content, authorId } = args.input;
+      const { title, content } = args.input;
       return context.prisma.mutation.createPost({
         data: {
           title: title,
@@ -34,9 +48,20 @@ const resolvers = {
           published: false,
           author: {
             connect: {
-              id: authorId,
+              id: 'ck6ib3nku000a0778ehplr35o',
             },
           },
+        },
+        info,
+      });
+    },
+    editPost: (_, args, context, info) => {
+      const { title, content } = args.input;
+      return context.prisma.mutation.updatePost({
+        data: {
+          title: title,
+          content: content,
+          published: true,
         },
         info,
       });
@@ -64,15 +89,15 @@ const resolvers = {
         info,
       );
     },
+    ///add const user here 3/9
     signup: (_, args, context, info) => {
-      return context.prisma.mutation.createUser(
-        {
-          data: {
-            name: args.name,
-          },
+      const user = {
+        data: {
+          name: args.input.name,
         },
         info,
-      );
+      };
+      return context.prisma.mutation.createUser(user);
     },
   },
 };

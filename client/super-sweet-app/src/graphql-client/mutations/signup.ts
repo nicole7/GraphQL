@@ -1,9 +1,8 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation signup {
-    signup(name: $name) {
-      id
+  mutation signup($input: String!) {
+    signup(input: $input) {
       name
     }
   }
