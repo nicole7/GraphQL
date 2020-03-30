@@ -27,14 +27,14 @@ const resolvers = {
         info,
       );
     },
-  post: (_, args, context, info) => {
-    return context.prisma.query.post(
-      {
-        where: {
-          id: args.id,
+    post: (_, args, context, info) => {
+      return context.prisma.query.post(
+        {
+          where: {
+            id: args.id,
+          },
         },
-      },
-      info,
+        info,
       );
     },
   },
@@ -56,12 +56,14 @@ const resolvers = {
       });
     },
     editPost: (_, args, context, info) => {
-      const { title, content } = args.input;
+      const { id, title, content } = args.input;
       return context.prisma.mutation.updatePost({
+        where: {
+          id: id,
+        },
         data: {
           title: title,
           content: content,
-          published: true,
         },
         info,
       });

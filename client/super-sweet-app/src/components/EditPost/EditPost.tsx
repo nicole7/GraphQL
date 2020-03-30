@@ -2,71 +2,57 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import './EditPost.scss';
 import { GET_POST } from '../../graphql-client/queries';
-//import { UpdatePostInput } from '../../types/schemaTypes';
+import { EDIT_POST } from '../../graphql-client/mutations';
+import { UpdatePostInput } from '../../types/schemaTypes';
 import { Routes } from '../../../src/utils/routes';
 import Textfield from '../_common/Textfield/Textfield';
 import { CustomButton } from '../_common/CustomButton/CustomButton';
+import { CardTitle } from 'react-bootstrap/Card';
 
 export const EditPost = ({ match }: any): JSX.Element => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [updatePostInput, setUpdatePostInput] = useState({ title: '', content: '' });
   const { loading, error, data } = useQuery(GET_POST, {
     variables: {
       id: match.params.id,
     },
   });
-  //   const [editMutation] = useMutation(ADD_POST,
-  //     onCompleted: () => console.log('post completed!'),
-  //   });
+  const [editMutation] = useMutation(EDIT_POST, {
+    onCompleted: () => console.log('post completed!'),
+  });
 
   const postMutation = (): void => {
     const URL = `${window.location.origin}${Routes.POST.route}`;
     window.open(URL, '_self');
   };
 
-  const handleInputChange = (): void => {};
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ): void => {
+    event.persist();
+    setUpdatePostInput(updatePostInput => ({ ...updatePostInput, [event.target.name]: event.target.value }));
+  };
 
-  const addEditedPost = (): void => {};
+  const updatePost = (): void => {
+      console.log(updatePostInput);
+    //editMutation({ variables: { input: UpdatePostInput } });
+  };
 
   if (data && data.post) {
     console.log(JSON.stringify(data));
     return (
       <div>
-        {/* <div>
-           <Textfield
-            label="Title"
-            name="title"
-            onBlur={(event: any) => {
-              handleInputChange(event);
-            }}
-          />
-          <Textfield
-            label="Content"
-            name="content"
-            onBlur={(event: any) => {
-              handleInputChange(event);
-            }}
-          />
+        <div>
+          <Textfield label="Title" name="title" value={data.post.title} onChange={handleInputChange} />
+          <Textfield label="Content" name="content" value={data.post.content} onChange={handleInputChange} />
           <div className="AddPost-Button">
             <CustomButton
               title="Save"
               onClick={() => {
-                addEditedPost();
+                updatePost();
               }}
             ></CustomButton>
           </div>
-        </div> */}
-        <form>
-          <label>
-            Title:
-            <input type="text" name="title" value={data.post.title} onChange={e => setTitle(e.target.value)} />
-          </label>
-
-          <label>
-            Content:
-            <input type="text" name="content" value={data.post.content} onChange={e => setContent(e.target.value)} />
-          </label>
-        </form>
+        </div>
       </div>
     );
   }

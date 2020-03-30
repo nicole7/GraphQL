@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { InputGroup, Form } from "react-bootstrap";
-import "./Textfield.scss";
+import React, { useState, useEffect } from 'react';
+import { InputGroup, Form } from 'react-bootstrap';
+import './Textfield.scss';
 
 interface CommonPropsType {
   disabled?: boolean;
   onBlur?: () => void;
   onChange?: (event: any) => void;
-
 }
 
 interface TextfieldProps {
@@ -17,11 +16,7 @@ interface TextfieldProps {
   id?: string;
   name?: string;
   onChange?:
-    | ((
-        event: React.ChangeEvent<
-          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
-      ) => void)
+    | ((event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void)
     | undefined;
   value?: string | number | null;
   inputLabel?: string | null;
@@ -30,25 +25,22 @@ interface TextfieldProps {
   inputProps?: () => void;
 }
 
-export const Textfield = ({
-  label,
-  name,
-  onChange,
-  value,
-  onBlur
-}: TextfieldProps): JSX.Element => {
+export const Textfield = ({ label, name, onChange, value, onBlur }: TextfieldProps): JSX.Element => {
   const [inputValue, setInputValue] = useState(value);
 
-  const commonProps: CommonPropsType = {
-    onBlur: (): void => {
+ 
+   const handleOnBlur = (): void => {
       if (onBlur) {
         onBlur(inputValue);
       }
-    },
-    // onChange: (event: any): void => {
-    //   setInputValue(value);
-    // }
-  };
+    };
+
+   const handleOnChange = (event: any): void => {
+      if (onChange) {
+        onChange(event);
+      }
+    };
+
 
   useEffect(() => {
     setInputValue(value);
@@ -62,7 +54,7 @@ export const Textfield = ({
             <InputGroup.Text>{label}</InputGroup.Text>
           </Form.Label>
           <div className="Textfield-InputBox">
-            <Form.Control type="text" name={name}/>
+            <Form.Control type="text" name={name} defaultValue={inputValue ? inputValue : ''} onBlur={handleOnBlur} onChange={handleOnChange}/>
           </div>
         </InputGroup>
       </form>

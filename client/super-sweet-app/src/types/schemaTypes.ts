@@ -134,6 +134,28 @@ export interface users {
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: post
+// ====================================================
+
+export interface post_post {
+  __typename: "Post";
+  title: string;
+  content: string | null;
+}
+
+export interface post {
+  post: post_post | null;
+}
+
+export interface postVariables {
+  id: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -145,6 +167,7 @@ export interface CreateDraftInput {
 }
 
 export interface UpdatePostInput {
+  id: string;
   title: string;
   content: string;
 }

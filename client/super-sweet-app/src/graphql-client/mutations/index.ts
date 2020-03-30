@@ -1,4 +1,4 @@
 import ADD_POST from './addPost';
 import SIGNUP from './signup';
-import PUBLISH from './editPost';
-export { ADD_POST, SIGNUP, PUBLISH };
+import EDIT_POST from './editPost';
+export { ADD_POST, SIGNUP, EDIT_POST  };
